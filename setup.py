@@ -23,6 +23,12 @@ import warnings
 
 from setuptools import setup, find_packages
 import torch
+from packaging.version import parse
+
+torch_version = parse(torch.__version__.split('+')[0].replace('dev', ''))
+if torch_version < Version("2.10.0"):
+    raise RuntimeError(f"Torch version {torch.__version__} is too old. Torch 2.10.0 or newer is required.")
+
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension, CUDA_HOME
 
 HAS_SM80 = False
@@ -243,8 +249,11 @@ setup(
     long_description=open('README.md', encoding='utf-8').read(),  
     long_description_content_type='text/markdown', 
     url='https://github.com/thu-ml/SageAttention', 
+    install_requires=[
+        "torch>=2.10.0",
+        ],
     packages=find_packages(),
-    python_requires='>=3.9',
+    python_requires='>=3.12,<3.13',
     ext_modules=ext_modules,
     cmdclass={"build_ext": BuildExtensionSeparateDir} if ext_modules else {},
 )
