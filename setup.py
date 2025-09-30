@@ -249,9 +249,6 @@ setup(
     long_description=open('README.md', encoding='utf-8').read(),  
     long_description_content_type='text/markdown', 
     url='https://github.com/thu-ml/SageAttention', 
-    install_requires=[
-        "torch>=2.10.0",
-        ],
     packages=find_packages(),
     python_requires='>=3.12,<3.13',
     ext_modules=ext_modules,
